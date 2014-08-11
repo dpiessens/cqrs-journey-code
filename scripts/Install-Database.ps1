@@ -40,13 +40,16 @@ param (
     [switch] $UseSqlServerAuthentication = [switch]::present,
 # Sql Server Authentication user name
     [Parameter(ParameterSetName='SqlServerAuthentication', Mandatory=$true)]
-    [string] $UserName
+    [string] $UserName,
+#Sql Server Authentication password
+    [Parameter(ParameterSetName='SqlServerAuthentication', Mandatory=$true)]
+    [string] $Password
 )
 
 switch($PsCmdlet.ParameterSetName)
 {
   "WindowsAuthentication" { $authenticationParamters = "-E" }
-  "SqlServerAuthentication" { $authenticationParamters = "-U $UserName" }
+  "SqlServerAuthentication" { $authenticationParamters = "-U $UserName -P $Password" }
 }
 
 $scriptPath = Split-Path (Get-Variable MyInvocation -Scope 0).Value.MyCommand.Path

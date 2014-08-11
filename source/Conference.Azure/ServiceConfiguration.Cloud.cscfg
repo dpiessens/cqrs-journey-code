@@ -1,21 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ServiceConfiguration serviceName="Conference.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="1" osVersion="*" schemaVersion="2012-05.1.7">
+<ServiceConfiguration serviceName="Conference.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="1" osVersion="*" schemaVersion="2014-01.2.3">
   <Role name="Conference.Web.Admin">
     <Instances count="1" />
     <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=cqrsclouddemo;AccountKey=8CQAarI9Ejk9QB9Q0g7aB2qsr9V9M61Gb7fddZn+hBi/ciX6L21hob70SPwxzOY/6xK5rhF2n/0iG37ZMcwgSg==" />
       <Setting name="Diagnostics.ScheduledTransferPeriod" value="00:02:00" />
       <Setting name="Diagnostics.LogLevelFilter" value="Warning" />
       <Setting name="Diagnostics.PerformanceCounterSampleRate" value="00:00:30" />
       <Setting name="DbContext.ConferenceManagement" value="" />
       <Setting name="DbContext.SqlBus" value="" />
       <Setting name="MaintenanceMode" value="false" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="Deployer" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBlQYJKoZIhvcNAQcDoIIBhjCCAYICAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEBhtIhtrlLy2RBbzFjmWXeUwDQYJKoZIhvcNAQEBBQAEggEAR5YBsHTqEWMTe3eIXzDK9ndqRQNMZOEo5DwpscXIkznabtdEUsoKvV2//FNUIKYS64y1yw9TLs/tKSG3z9jMTFCPLuU+ikZycunVurxnaP5B2joKirBGwP/+wrSX6VBe0ORvkNJkj8fLL/pQmMl1oQ2DsEbG92R9nQU9PqTGeJr5txKOvhoJQ0aGcftTPD8z/6LtIDn9RR+49CqnHQSVLtwoBjZCTQ39J0Ge5OgA+tD/fPxlIqKUvLDe4Kv1RYSJNiDlohnU3hoSHzNVMWAHP0EAiUJW5N9dSpY5gAUZ8L54quZ7xOOLNIBQNPnZyqFeaoNc2qa1A6Z0yP/3H18d5jArBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECD1K/krW1iJ4gAgX7AWYlgDAmg==" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2015-08-29T23:59:59.0000000-04:00" />
     </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="F8A20A8C1139DE2ED739209638D0610ADD806A7B" thumbprintAlgorithm="sha1" />
+    </Certificates>
   </Role>
   <Role name="Conference.Web.Public">
     <Instances count="1" />
     <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=cqrsclouddemo;AccountKey=8CQAarI9Ejk9QB9Q0g7aB2qsr9V9M61Gb7fddZn+hBi/ciX6L21hob70SPwxzOY/6xK5rhF2n/0iG37ZMcwgSg==" />
       <Setting name="Diagnostics.ScheduledTransferPeriod" value="00:02:00" />
       <Setting name="Diagnostics.LogLevelFilter" value="Warning" />
       <Setting name="Diagnostics.PerformanceCounterSampleRate" value="00:00:30" />
@@ -25,12 +32,19 @@
       <Setting name="DbContext.BlobStorage" value="" />
       <Setting name="MaintenanceMode" value="false" />
       <Setting name="InstrumentationEnabled" value="false" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="Deployer" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBlQYJKoZIhvcNAQcDoIIBhjCCAYICAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEBhtIhtrlLy2RBbzFjmWXeUwDQYJKoZIhvcNAQEBBQAEggEAR5YBsHTqEWMTe3eIXzDK9ndqRQNMZOEo5DwpscXIkznabtdEUsoKvV2//FNUIKYS64y1yw9TLs/tKSG3z9jMTFCPLuU+ikZycunVurxnaP5B2joKirBGwP/+wrSX6VBe0ORvkNJkj8fLL/pQmMl1oQ2DsEbG92R9nQU9PqTGeJr5txKOvhoJQ0aGcftTPD8z/6LtIDn9RR+49CqnHQSVLtwoBjZCTQ39J0Ge5OgA+tD/fPxlIqKUvLDe4Kv1RYSJNiDlohnU3hoSHzNVMWAHP0EAiUJW5N9dSpY5gAUZ8L54quZ7xOOLNIBQNPnZyqFeaoNc2qa1A6Z0yP/3H18d5jArBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECD1K/krW1iJ4gAgX7AWYlgDAmg==" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2015-08-29T23:59:59.0000000-04:00" />
     </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="F8A20A8C1139DE2ED739209638D0610ADD806A7B" thumbprintAlgorithm="sha1" />
+    </Certificates>
   </Role>
   <Role name="WorkerRoleCommandProcessor">
     <Instances count="1" />
     <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=cqrsclouddemo;AccountKey=8CQAarI9Ejk9QB9Q0g7aB2qsr9V9M61Gb7fddZn+hBi/ciX6L21hob70SPwxzOY/6xK5rhF2n/0iG37ZMcwgSg==" />
       <Setting name="Diagnostics.ScheduledTransferPeriod" value="00:02:00" />
       <Setting name="Diagnostics.LogLevelFilter" value="Information" />
       <Setting name="Diagnostics.PerformanceCounterSampleRate" value="00:00:30" />
@@ -44,6 +58,14 @@
       <Setting name="MaintenanceMode" value="false" />
       <Setting name="DbContext.MessageLog" value="" />
       <Setting name="InstrumentationEnabled" value="false" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="Deployer" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBlQYJKoZIhvcNAQcDoIIBhjCCAYICAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEBhtIhtrlLy2RBbzFjmWXeUwDQYJKoZIhvcNAQEBBQAEggEAR5YBsHTqEWMTe3eIXzDK9ndqRQNMZOEo5DwpscXIkznabtdEUsoKvV2//FNUIKYS64y1yw9TLs/tKSG3z9jMTFCPLuU+ikZycunVurxnaP5B2joKirBGwP/+wrSX6VBe0ORvkNJkj8fLL/pQmMl1oQ2DsEbG92R9nQU9PqTGeJr5txKOvhoJQ0aGcftTPD8z/6LtIDn9RR+49CqnHQSVLtwoBjZCTQ39J0Ge5OgA+tD/fPxlIqKUvLDe4Kv1RYSJNiDlohnU3hoSHzNVMWAHP0EAiUJW5N9dSpY5gAUZ8L54quZ7xOOLNIBQNPnZyqFeaoNc2qa1A6Z0yP/3H18d5jArBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECD1K/krW1iJ4gAgX7AWYlgDAmg==" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2015-08-29T23:59:59.0000000-04:00" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
     </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="F8A20A8C1139DE2ED739209638D0610ADD806A7B" thumbprintAlgorithm="sha1" />
+    </Certificates>
   </Role>
 </ServiceConfiguration>

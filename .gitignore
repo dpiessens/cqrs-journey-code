@@ -25,3 +25,4 @@ _UpgradeReport_Files
 /source/Migrations/MigrationToV3.Azure/csx/
 *.build.csdef
 *crunch*
+*.GhostDoc.xml

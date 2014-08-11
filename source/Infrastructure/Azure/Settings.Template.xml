@@ -4,10 +4,10 @@
 <InfrastructureSettings xmlns="urn:microsoft-patterns-and-practices-cqrsjourney">
   <ServiceBus>
     <ServiceUriScheme>sb</ServiceUriScheme>
-    <ServiceNamespace>[YOUR_NAMESPACE]</ServiceNamespace>
+    <ServiceNamespace>cqrsclouddemo</ServiceNamespace>
     <ServicePath></ServicePath>
     <TokenIssuer>owner</TokenIssuer>
-    <TokenAccessKey>[YOUR_TOKEN_ACCESS_KEY]</TokenAccessKey>
+    <TokenAccessKey>EzGWHUumGFlwh1SlsjRj7OXwAm8rcxZmL21Z7x1RFRY=</TokenAccessKey>
     <Topics>
       <Topic Path="conference/commands" DuplicateDetectionHistoryTimeWindow="00:30:00">
         <Subscription Name="sessionless" RequiresSession="false" SqlFilter="TypeName NOT IN ('AddSeats','RemoveSeats','MakeSeatReservation','CommitSeatReservation','CancelSeatReservation')" />
@@ -39,18 +39,18 @@
   </ServiceBus>
   <EventSourcing>
     <!-- Use a valid Windows Azure storage account, as the development storage emulator does not support entity projections, which we are using in the Event Store -->
-    <ConnectionString>DefaultEndpointsProtocol=https;AccountName=[YOUR_ACCOUNT_NAME];AccountKey=[YOUR_ACCOUNT_KEY]</ConnectionString>
+    <ConnectionString>DefaultEndpointsProtocol=https;AccountName=cqrsclouddemo;AccountKey=8CQAarI9Ejk9QB9Q0g7aB2qsr9V9M61Gb7fddZn+hBi/ciX6L21hob70SPwxzOY/6xK5rhF2n/0iG37ZMcwgSg==</ConnectionString>
     <!-- Table name in Windows Azure has restrictions: Only Alphanumeric Characters, Case-Insensitive, 3 to 63 Characters, May Not Begin With a Numeric Character -->
     <OrdersTableName>ConferenceEventStoreOrders</OrdersTableName>
     <SeatsAvailabilityTableName>ConferenceEventStoreSeats</SeatsAvailabilityTableName>
   </EventSourcing>
   <MessageLog>
-    <ConnectionString>DefaultEndpointsProtocol=https;AccountName=[YOUR_ACCOUNT_NAME];AccountKey=[YOUR_ACCOUNT_KEY]</ConnectionString>
+    <ConnectionString>DefaultEndpointsProtocol=https;AccountName=cqrsclouddemo;AccountKey=8CQAarI9Ejk9QB9Q0g7aB2qsr9V9M61Gb7fddZn+hBi/ciX6L21hob70SPwxzOY/6xK5rhF2n/0iG37ZMcwgSg==</ConnectionString>
     <!-- Table name in Windows Azure has restrictions: Only Alphanumeric Characters, Case-Insensitive, 3 to 63 Characters, May Not Begin With a Numeric Character -->
     <TableName>ConferenceMessageLog</TableName>
   </MessageLog>
   <BlobStorage>
-    <ConnectionString>DefaultEndpointsProtocol=https;AccountName=[YOUR_ACCOUNT_NAME];AccountKey=[YOUR_ACCOUNT_KEY]</ConnectionString>
+    <ConnectionString>DefaultEndpointsProtocol=https;AccountName=cqrsclouddemo;AccountKey=8CQAarI9Ejk9QB9Q0g7aB2qsr9V9M61Gb7fddZn+hBi/ciX6L21hob70SPwxzOY/6xK5rhF2n/0iG37ZMcwgSg==</ConnectionString>
     <!-- Container name in Windows Azure has restrictions: Only Lower-case Alphanumeric Characters and Dashes, 3 to 63 Characters, May Not Begin a Dash, May Not Contain Two Consecutive Dashes -->
     <RootContainerName>conference-read-model</RootContainerName>
   </BlobStorage>
