@@ -229,7 +229,7 @@ namespace Infrastructure.Azure.EventSourcing
 
             this.pendingEventsQueueRetryPolicy.ExecuteAction(
                 ac => query.BeginExecuteSegmented(ac, null),
-                ar => query.EndExecuteSegmented(ar),
+                query.EndExecuteSegmented,
                 rs =>
                 {
                     foreach (var key in rs.Results.Select(x => x.PartitionKey).Distinct())

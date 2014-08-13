@@ -1,4 +1,5 @@
-﻿@model Registration.ReadModel.ConferenceDetails
+﻿@using Conference.Web.Public.Toggles
+@model Registration.ReadModel.ConferenceDetails
 @{
     ViewBag.Title = Model.Name;
 }
@@ -25,25 +26,30 @@
                     <span class="tile__header">About event</span>
                 </a>
                 <a class="tile" href="#">
-					<span class="tile__imgs tile-slide">
-						<img class="tile__img" src="@Url.Content("~/Content/Conference/sessions.png")" alt="" style="z-index: 10;">
-						<span style="display: none;">
-							<span class="tile__topic">Get the .NET Framework 1.1 – MSDN
-								Explore Windows, Web, Cloud
-							</span>
-							<span class="tile__span">11:00 am – 12:00 am</span>
-						</span>
-					</span>
+                    <span class="tile__imgs tile-slide">
+                        <img class="tile__img" src="@Url.Content("~/Content/Conference/sessions.png")" alt="" style="z-index: 10;">
+                        <span style="display: none;">
+                            <span class="tile__topic">Get the .NET Framework 1.1 – MSDN
+                                Explore Windows, Web, Cloud
+                            </span>
+                            <span class="tile__span">11:00 am – 12:00 am</span>
+                        </span>
+                    </span>
                     <span class="tile__header">Sessions</span>
                 </a>
-                <a class="tile tile_narrow" href="#">
-					<span class="tile__imgs tile-slide">
-						<img class="tile__img" src="@Url.Content("~/Content/Conference/destination.png")" alt="" style="z-index: 10;">
-						<img class="tile__img" src="@Url.Content("~/Content/tmp/pic_1.jpg")" alt="">
-						<img class="tile__img" src="@Url.Content("~/Content/tmp/pic_2.jpg")" alt="">
-					</span>
-                    <span class="tile__header">Destination</span>
-                </a>
+
+                @if (FeatureSwitch.FeatureContext.IsEnabled<DestinationFeatureToggle>())
+                {
+                    <a class="tile tile_narrow" href="#">
+                        <span class="tile__imgs tile-slide">
+                            <img class="tile__img" src="@Url.Content("~/Content/Conference/destination.png")" alt="" style="z-index: 10;">
+                            <img class="tile__img" src="@Url.Content("~/Content/tmp/pic_1.jpg")" alt="">
+                            <img class="tile__img" src="@Url.Content("~/Content/tmp/pic_2.jpg")" alt="">
+                        </span>
+                        <span class="tile__header">Destination</span>
+                    </a>
+                }
+                
                 <a class="tile" href="#">
                     <span class="tile__topic">Automating your build process with perforated cards
                     </span>

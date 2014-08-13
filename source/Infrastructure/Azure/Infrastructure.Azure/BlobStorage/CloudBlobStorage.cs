@@ -76,10 +76,7 @@ namespace Infrastructure.Azure.BlobStorage
 
             var blobReference = containerReference.GetBlobReference(id);
 
-            this.writeRetryPolicy.ExecuteAction(() =>
-                {
-                    blobReference.UploadByteArray(blob);
-                });
+            this.writeRetryPolicy.ExecuteAction(() => blobReference.UploadByteArray(blob));
         }
 
         public void Delete(string id)

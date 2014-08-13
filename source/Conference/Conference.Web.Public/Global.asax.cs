@@ -66,6 +66,9 @@ namespace Conference.Web.Public
             }
 #endif
 
+            var builder = new FeatureSwitch.FeatureSetBuilder();
+            builder.Build();
+
             this.OnStart();
         }
 
