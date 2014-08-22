@@ -16,6 +16,7 @@ namespace Registration
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Diagnostics;
     using System.Linq;
     using Infrastructure.Messaging;
@@ -70,6 +71,7 @@ namespace Registration
         public Guid ExpirationCommandId { get; set; }
 
         public int StateValue { get; private set; }
+
         [NotMapped]
         public ProcessState State
         {

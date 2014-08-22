@@ -17,6 +17,8 @@ namespace Payments
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     using Infrastructure.Messaging;
     using Infrastructure.Database;
     using Payments.Contracts.Events;

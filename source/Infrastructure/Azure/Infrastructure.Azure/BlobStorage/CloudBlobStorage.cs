@@ -14,20 +14,21 @@
 namespace Infrastructure.Azure.BlobStorage
 {
     using System;
-    using System.Diagnostics;
+    using System.IO;
+    using System.Net;
+
     using Infrastructure.BlobStorage;
-    using Microsoft.Practices.EnterpriseLibrary.WindowsAzure.TransientFaultHandling.AzureStorage;
-    using Microsoft.Practices.TransientFaultHandling;
-    using Microsoft.WindowsAzure;
-    using Microsoft.WindowsAzure.StorageClient;
+
+    using Microsoft.WindowsAzure.Storage;
+    using Microsoft.WindowsAzure.Storage.Blob;
+    using Microsoft.WindowsAzure.Storage.RetryPolicies;
 
     public class CloudBlobStorage : IBlobStorage
     {
         private readonly CloudStorageAccount account;
         private readonly string rootContainerName;
         private readonly CloudBlobClient blobClient;
-        private readonly RetryPolicy<StorageTransientErrorDetectionStrategy> readRetryPolicy;
-        private readonly RetryPolicy<StorageTransientErrorDetectionStrategy> writeRetryPolicy;
+        private readonly BlobRequestOptions blobRequestWriteOptions;
 
         public CloudBlobStorage(CloudStorageAccount account, string rootContainerName)
         {
@@ -35,70 +36,67 @@ namespace Infrastructure.Azure.BlobStorage
             this.rootContainerName = rootContainerName;
 
             this.blobClient = account.CreateCloudBlobClient();
-            this.blobClient.RetryPolicy = RetryPolicies.NoRetry();
+            this.blobClient.DefaultRequestOptions.RetryPolicy = new LinearRetry(TimeSpan.FromSeconds(1), 1);
 
-            this.readRetryPolicy = new RetryPolicy<StorageTransientErrorDetectionStrategy>(new Incremental(1, TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)));
-            this.readRetryPolicy.Retrying += (s, e) => Trace.TraceWarning("An error occurred in attempt number {1} to read from blob storage: {0}", e.LastException.Message, e.CurrentRetryCount);
-            this.writeRetryPolicy = new RetryPolicy<StorageTransientErrorDetectionStrategy>(new FixedInterval(1, TimeSpan.FromSeconds(10)) { FastFirstRetry = false });
-            this.writeRetryPolicy.Retrying += (s, e) => Trace.TraceWarning("An error occurred in attempt number {1} to write to blob storage: {0}", e.LastException.Message, e.CurrentRetryCount);
+            //this.readRetryPolicy.Retrying += (s, e) => Trace.TraceWarning("An error occurred in attempt number {1} to read from blob storage: {0}", e.LastException.Message, e.CurrentRetryCount);
+
+            this.blobRequestWriteOptions = new BlobRequestOptions { RetryPolicy = new LinearRetry(TimeSpan.FromSeconds(10), 1) };
+            //this.writeRetryPolicy.Retrying += (s, e) => Trace.TraceWarning("An error occurred in attempt number {1} to write to blob storage: {0}", e.LastException.Message, e.CurrentRetryCount);
 
             var containerReference = this.blobClient.GetContainerReference(this.rootContainerName);
-            this.writeRetryPolicy.ExecuteAction(() => containerReference.CreateIfNotExist());
+            containerReference.CreateIfNotExists(this.blobRequestWriteOptions);
         }
 
         public byte[] Find(string id)
         {
             var containerReference = this.blobClient.GetContainerReference(this.rootContainerName);
-            var blobReference = containerReference.GetBlobReference(id);
+            var blobReference = containerReference.GetBlobReferenceFromServer(id);
 
-            return this.readRetryPolicy.ExecuteAction(() =>
+            try
+            {
+                using (var memoryStream = new MemoryStream())
                 {
-                    try
-                    {
-                        return blobReference.DownloadByteArray();
-                    }
-                    catch (StorageClientException e)
-                    {
-                        if (e.ErrorCode == StorageErrorCode.ResourceNotFound || e.ErrorCode == StorageErrorCode.BlobNotFound || e.ErrorCode == StorageErrorCode.ContainerNotFound)
-                        {
-                            return null;
-                        }
+                    blobReference.DownloadToStream(memoryStream);
+                    return memoryStream.ToArray();
+                } 
+            }
+            catch (StorageException e)
+            {
+                if (e.RequestInformation.HttpStatusCode == (int)HttpStatusCode.NotFound)
+                {
+                    return null;
+                }
 
-                        throw;
-                    }
-                });
+                throw;
+            }
         }
 
         public void Save(string id, string contentType, byte[] blob)
         {
             var client = this.account.CreateCloudBlobClient();
             var containerReference = client.GetContainerReference(this.rootContainerName);
+            var blobReference = containerReference.GetBlobReferenceFromServer(id);
 
-            var blobReference = containerReference.GetBlobReference(id);
-
-            this.writeRetryPolicy.ExecuteAction(() => blobReference.UploadByteArray(blob));
+            blobReference.UploadFromByteArray(blob, 0, blob.Length, null, this.blobRequestWriteOptions);
         }
 
         public void Delete(string id)
         {
             var client = this.account.CreateCloudBlobClient();
             var containerReference = client.GetContainerReference(this.rootContainerName);
-            var blobReference = containerReference.GetBlobReference(id);
+            var blobReference = containerReference.GetBlobReferenceFromServer(id);
 
-            this.writeRetryPolicy.ExecuteAction(() =>
+            try
+            {
+                blobReference.DeleteIfExists();
+            }
+            catch (StorageException e)
+            {
+                if (e.RequestInformation.HttpStatusCode == (int)HttpStatusCode.NotFound)
                 {
-                    try
-                    {
-                        blobReference.DeleteIfExists();
-                    }
-                    catch (StorageClientException e)
-                    {
-                        if (e.ErrorCode != StorageErrorCode.ResourceNotFound)
-                        {
-                            throw;
-                        }
-                    }
-                });
+                    throw;
+                }
+            }
         }
     }
 }

@@ -14,19 +14,15 @@
 namespace Infrastructure.Azure.MessageLog
 {
     using System;
-    using System.Data.Services.Client;
-    using System.Net;
-    using Microsoft.Practices.EnterpriseLibrary.WindowsAzure.TransientFaultHandling.AzureStorage;
-    using Microsoft.Practices.TransientFaultHandling;
-    using Microsoft.WindowsAzure;
-    using Microsoft.WindowsAzure.StorageClient;
+
+    using Microsoft.WindowsAzure.Storage;
+    using Microsoft.WindowsAzure.Storage.Table;
+    using Microsoft.WindowsAzure.Storage.RetryPolicies;
 
     public class AzureMessageLogWriter : IAzureMessageLogWriter
     {
-        private readonly CloudStorageAccount account;
         private readonly string tableName;
         private readonly CloudTableClient tableClient;
-        private Microsoft.Practices.TransientFaultHandling.RetryPolicy retryPolicy;
 
         public AzureMessageLogWriter(CloudStorageAccount account, string tableName)
         {
@@ -34,38 +30,18 @@ namespace Infrastructure.Azure.MessageLog
             if (tableName == null) throw new ArgumentNullException("tableName");
             if (string.IsNullOrWhiteSpace(tableName)) throw new ArgumentException("tableName");
 
-            this.account = account;
             this.tableName = tableName;
             this.tableClient = account.CreateCloudTableClient();
-            this.tableClient.RetryPolicy = RetryPolicies.NoRetry();
+            this.tableClient.DefaultRequestOptions.RetryPolicy = new ExponentialRetry(TimeSpan.FromSeconds(1), 10);
 
-            var retryStrategy = new ExponentialBackoff(10, TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(15), TimeSpan.FromSeconds(1));
-            this.retryPolicy = new RetryPolicy<StorageTransientErrorDetectionStrategy>(retryStrategy);
-
-            this.retryPolicy.ExecuteAction(() => tableClient.CreateTableIfNotExist(tableName));
+            tableClient.GetTableReference(tableName).CreateIfNotExists();
         }
 
         public void Save(MessageLogEntity entity)
         {
-            this.retryPolicy.ExecuteAction(() =>
-            {
-                var context = this.tableClient.GetDataServiceContext();
-
-                context.AddObject(this.tableName, entity);
-
-                try
-                {
-                    context.SaveChanges();
-                }
-                catch (DataServiceRequestException dsre)
-                {
-                    var clientException = dsre.InnerException as DataServiceClientException;
-                    // If we get a conflict, we ignore it as we've already saved the message, 
-                    // making this log idempotent.
-                    if (clientException == null || clientException.StatusCode != (int)HttpStatusCode.Conflict)
-                        throw;
-                }
-            });
+            var table = this.tableClient.GetTableReference(this.tableName);
+            var operation = TableOperation.InsertOrReplace(entity);
+            table.Execute(operation);
         }
     }
 }

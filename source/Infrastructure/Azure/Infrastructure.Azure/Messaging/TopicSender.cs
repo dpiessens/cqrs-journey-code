@@ -22,6 +22,8 @@ namespace Infrastructure.Azure.Messaging
     using Microsoft.ServiceBus;
     using Microsoft.ServiceBus.Messaging;
 
+    using RetryPolicy = Microsoft.Practices.TransientFaultHandling.RetryPolicy;
+
     /// <summary>
     /// Implements an asynchronous sender of messages to a Windows Azure Service Bus topic.
     /// </summary>

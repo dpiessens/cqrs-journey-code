@@ -17,6 +17,7 @@ namespace Conference
     using System.Collections.Generic;
     using System.Data;
     using System.Data.Entity;
+    using System.Data.Entity.Core;
     using System.Diagnostics;
     using System.Linq;
     using Infrastructure.Messaging;

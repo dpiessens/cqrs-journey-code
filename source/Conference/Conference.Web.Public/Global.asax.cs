@@ -40,10 +40,7 @@ namespace Conference.Web.Public
         {
 #if AZURESDK
             Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironment.Changed +=
-                (s, a) =>
-                {
-                    Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironment.RequestRecycle();
-                };
+                (s, a) => Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironment.RequestRecycle();
 #endif
             MaintenanceMode.RefreshIsInMaintainanceMode();
 

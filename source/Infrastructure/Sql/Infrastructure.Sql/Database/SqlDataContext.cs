@@ -38,7 +38,7 @@ namespace Infrastructure.Sql.Database
         {
             var entry = this.context.Entry(aggregateRoot);
 
-            if (entry.State == System.Data.EntityState.Detached)
+            if (entry.State == EntityState.Detached)
                 this.context.Set<T>().Add(aggregateRoot);
 
             // Can't have transactions across storage and message bus.

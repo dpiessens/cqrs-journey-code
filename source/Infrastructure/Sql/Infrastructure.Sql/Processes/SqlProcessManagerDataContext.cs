@@ -119,7 +119,7 @@ namespace Infrastructure.Sql.Processes
         {
             var entry = this.context.Entry(processManager);
 
-            if (entry.State == System.Data.EntityState.Detached)
+            if (entry.State == EntityState.Detached)
                 this.context.Set<T>().Add(processManager);
 
             var commands = processManager.Commands.ToList();

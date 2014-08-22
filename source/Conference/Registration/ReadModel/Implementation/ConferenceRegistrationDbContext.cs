@@ -69,7 +69,7 @@ namespace Registration.ReadModel.Implementation
         {
             var entry = this.Entry(entity);
 
-            if (entry.State == System.Data.EntityState.Detached)
+            if (entry.State == EntityState.Detached)
                 this.Set<T>().Add(entity);
 
             this.retryPolicy.ExecuteAction(() => this.SaveChanges());
