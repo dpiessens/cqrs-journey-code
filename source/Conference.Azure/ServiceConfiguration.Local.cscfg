@@ -3,7 +3,6 @@
   <Role name="Conference.Web.Admin">
     <Instances count="1" />
     <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="Diagnostics.ScheduledTransferPeriod" value="00:02:00" />
       <Setting name="Diagnostics.LogLevelFilter" value="Verbose" />
       <Setting name="Diagnostics.PerformanceCounterSampleRate" value="00:00:30" />
@@ -22,7 +21,6 @@
   <Role name="Conference.Web.Public">
     <Instances count="1" />
     <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="Diagnostics.ScheduledTransferPeriod" value="00:02:00" />
       <Setting name="Diagnostics.LogLevelFilter" value="Verbose" />
       <Setting name="Diagnostics.PerformanceCounterSampleRate" value="00:00:30" />
@@ -44,7 +42,6 @@
   <Role name="WorkerRoleCommandProcessor">
     <Instances count="1" />
     <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="Diagnostics.ScheduledTransferPeriod" value="00:02:00" />
       <Setting name="Diagnostics.LogLevelFilter" value="Verbose" />
       <Setting name="Diagnostics.PerformanceCounterSampleRate" value="00:00:30" />

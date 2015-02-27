@@ -12,7 +12,6 @@
       <InputEndpoint name="Endpoint1" protocol="http" port="8080" />
     </Endpoints>
     <Imports>
-      <Import moduleName="Diagnostics" />
       <Import moduleName="RemoteAccess" />
     </Imports>
     <ConfigurationSettings>
@@ -36,7 +35,6 @@
       <InputEndpoint name="Endpoint1" protocol="http" port="80" />
     </Endpoints>
     <Imports>
-      <Import moduleName="Diagnostics" />
       <Import moduleName="RemoteAccess" />
     </Imports>
     <ConfigurationSettings>
@@ -65,7 +63,6 @@
   </WebRole>
   <WorkerRole name="WorkerRoleCommandProcessor" vmsize="ExtraSmall">
     <Imports>
-      <Import moduleName="Diagnostics" />
       <Import moduleName="RemoteAccess" />
       <Import moduleName="RemoteForwarder" />
     </Imports>
