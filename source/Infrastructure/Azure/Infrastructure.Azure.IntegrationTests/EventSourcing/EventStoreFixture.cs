@@ -22,8 +22,7 @@ namespace Infrastructure.Azure.IntegrationTests.EventSourcing.EventStoreFixture
     using Infrastructure;
     using Infrastructure.Azure;
     using Infrastructure.Azure.EventSourcing;
-    using Microsoft.WindowsAzure;
-    using Microsoft.WindowsAzure.StorageClient;
+    using Microsoft.WindowsAzure.Storage;
     using Xunit;
 
     public class given_empty_store : IDisposable
@@ -55,7 +54,11 @@ namespace Infrastructure.Azure.IntegrationTests.EventSourcing.EventStoreFixture
         public void Dispose()
         {
             var client = this.account.CreateCloudTableClient();
-            client.DeleteTableIfExist(this.tableName);
+            var table = client.GetTableReference(this.tableName);
+            if (table != null)
+            {
+                table.DeleteIfExists();
+            }
         }
     }
 

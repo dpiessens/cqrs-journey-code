@@ -58,7 +58,7 @@ namespace Conference.Web.Public
 #if AZURESDK
             if (Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironment.IsAvailable)
             {
-                System.Diagnostics.Trace.Listeners.Add(new Microsoft.WindowsAzure.Diagnostics.DiagnosticMonitorTraceListener());
+                //System.Diagnostics.Trace.Listeners.Add(new Microsoft.WindowsAzure.Diagnostics.DiagnosticMonitorTraceListener());
                 System.Diagnostics.Trace.AutoFlush = true;
             }
 #endif

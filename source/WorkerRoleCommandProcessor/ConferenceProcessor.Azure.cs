@@ -30,7 +30,8 @@ namespace WorkerRoleCommandProcessor
     using Infrastructure.Messaging.Handling;
     using Infrastructure.Serialization;
     using Microsoft.Practices.Unity;
-    using Microsoft.WindowsAzure;
+    using Microsoft.WindowsAzure.Storage;
+
     using Registration;
     using Registration.Handlers;
 

@@ -106,7 +106,7 @@ namespace Conference.Web.Admin
 #if AZURESDK
             if (Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironment.IsAvailable)
             {
-                System.Diagnostics.Trace.Listeners.Add(new Microsoft.WindowsAzure.Diagnostics.DiagnosticMonitorTraceListener());
+                //System.Diagnostics.Trace.Listeners.Add(new Microsoft.WindowsAzure.Diagnostics.DiagnosticMonitorTraceListener());
                 System.Diagnostics.Trace.AutoFlush = true;
             }
 #endif

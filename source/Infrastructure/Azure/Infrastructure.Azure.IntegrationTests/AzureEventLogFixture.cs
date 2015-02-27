@@ -20,8 +20,7 @@ namespace Infrastructure.Azure.IntegrationTests.AzureEventLogFixture
     using Infrastructure.MessageLog;
     using Infrastructure.Messaging;
     using Infrastructure.Serialization;
-    using Microsoft.WindowsAzure;
-    using Microsoft.WindowsAzure.StorageClient;
+    using Microsoft.WindowsAzure.Storage;
     using Moq;
     using Xunit;
 
@@ -114,7 +113,11 @@ namespace Infrastructure.Azure.IntegrationTests.AzureEventLogFixture
         public void Dispose()
         {
             var client = this.account.CreateCloudTableClient();
-            client.DeleteTableIfExist(this.tableName);
+            var table = client.GetTableReference(this.tableName);
+            if (table != null)
+            {
+                table.DeleteIfExists();
+            }
         }
 
         [Fact]

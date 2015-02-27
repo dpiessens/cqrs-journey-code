@@ -175,7 +175,7 @@ namespace WorkerRoleCommandProcessor
 
             DiagnosticMonitor.Start("Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString", config);
 
-            Trace.Listeners.Add(new DiagnosticMonitorTraceListener());
+            // Trace.Listeners.Add(new DiagnosticMonitorTraceListener());
             Trace.AutoFlush = true;
 
             Database.DefaultConnectionFactory = new ServiceConfigurationSettingConnectionFactory(Database.DefaultConnectionFactory);

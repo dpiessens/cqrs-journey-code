@@ -17,7 +17,7 @@ namespace WorkerRoleCommandProcessor
 
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             // Cleanup default EF DB initializers.
             DatabaseSetup.Initialize();

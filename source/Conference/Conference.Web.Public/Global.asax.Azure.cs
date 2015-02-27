@@ -35,6 +35,8 @@ namespace Conference.Web.Public
     using Infrastructure.Sql.Database;
     using Microsoft.Practices.Unity;
     using Microsoft.WindowsAzure;
+    using Microsoft.WindowsAzure.Storage;
+
     using Payments;
     using Payments.Database;
     using Payments.Handlers;

@@ -16,8 +16,7 @@ namespace Infrastructure.Azure.IntegrationTests.Storage.BlobStorageFixture
     using System;
     using System.Text;
     using Infrastructure.Azure.BlobStorage;
-    using Microsoft.WindowsAzure;
-    using Microsoft.WindowsAzure.StorageClient;
+    using Microsoft.WindowsAzure.Storage;
     using Xunit;
 
     public class given_blob_storage : IDisposable
@@ -43,7 +42,7 @@ namespace Infrastructure.Azure.IntegrationTests.Storage.BlobStorageFixture
             {
                 containerReference.Delete();
             }
-            catch (StorageClientException)
+            catch (StorageException)
             {
             }
         }
@@ -94,7 +93,7 @@ namespace Infrastructure.Azure.IntegrationTests.Storage.BlobStorageFixture
             {
                 containerReference.Delete();
             }
-            catch (StorageClientException)
+            catch (StorageException)
             {
             }
         }
@@ -139,7 +138,9 @@ namespace Infrastructure.Azure.IntegrationTests.Storage.BlobStorageFixture
         public void then_writes_blob()
         {
             var client = this.account.CreateCloudBlobClient();
-            var blobReference = client.GetBlobReference(this.rootContainerName + '/' + this.id);
+
+            var container = client.GetContainerReference(this.rootContainerName);
+            var blobReference = container.GetBlockBlobReference(this.id);
 
             blobReference.FetchAttributes();
         }
@@ -203,7 +204,9 @@ namespace Infrastructure.Azure.IntegrationTests.Storage.BlobStorageFixture
         public void then_writes_blob()
         {
             var client = this.account.CreateCloudBlobClient();
-            var blobReference = client.GetBlobReference(this.rootContainerName + '/' + this.id);
+
+            var container = client.GetContainerReference(this.rootContainerName);
+            var blobReference = container.GetBlockBlobReference(this.id);
 
             blobReference.FetchAttributes();
         }
